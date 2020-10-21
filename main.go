@@ -9,9 +9,11 @@ func main() {
 
 	router.Static("/assets", cfg.Assets)
 
-	router.LoadHTMLFiles(cfg.HTML + "index.html")
+	router.LoadHTMLFiles(cfg.HTML+"index.html", cfg.HTML+"searching.html")
 
 	router.GET("/", index)
+
+	router.Any("/searching", searching)
 
 	router.Run(cfg.ServerHost + ":" + cfg.ServerPort)
 }
