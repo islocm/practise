@@ -9,15 +9,18 @@ func main() {
 
 	router.Static("/assets", cfg.Assets)
 
-	router.LoadHTMLFiles(cfg.HTML+"index.html", cfg.HTML+"searching.html")
+	router.LoadHTMLFiles(cfg.HTML+"index.html", cfg.HTML+"searching.html", cfg.HTML+"upload.html")
 
 	router.GET("/", index)
 
-	router.Any("/searching", searching)
+	router.GET("/searching", searching)
+
+	router.GET("/upload", uploadsearching)
 
 	router.Run(cfg.ServerHost + ":" + cfg.ServerPort)
 }
 
 func index(c *gin.Context) {
+
 	c.HTML(200, "index.html", nil)
 }
