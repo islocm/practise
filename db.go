@@ -7,6 +7,9 @@ import (
 
 var db *sql.DB
 
+//Queries kk
+var Queries map[string]*sql.Stmt
+
 func connect() error {
 	var e error
 
@@ -16,4 +19,8 @@ func connect() error {
 		return e
 	}
 	return nil
+
+	Queries["hello"] := db.Prepare("select * from users")
+	Queries["hello"].Query()
+
 }

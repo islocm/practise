@@ -8,7 +8,6 @@ func main() {
 	router := gin.Default()
 
 	router.Static("/assets", cfg.Assets)
-
 	router.LoadHTMLFiles(cfg.HTML+"index.html", cfg.HTML+"searching.html", cfg.HTML+"upload.html")
 
 	router.GET("/", index)
@@ -16,6 +15,7 @@ func main() {
 	router.GET("/searching", searching)
 
 	router.GET("/upload", uploadsearching)
+	router.POST("/upload", uploadsearching1)
 
 	router.Run(cfg.ServerHost + ":" + cfg.ServerPort)
 }
