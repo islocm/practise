@@ -9,6 +9,7 @@ import (
 )
 
 func searching(c *gin.Context) {
+
 	c.HTML(200, "searching.html", nil)
 }
 
@@ -42,7 +43,21 @@ func uploadsearching1(c *gin.Context) {
 
 	}
 	for _, rows := range getrow {
-		fmt.Println(rows)
+
+		res, e := Select(rows[1])
+		if res != "Error" {
+			e := Update(rows)
+			if e != nil {
+				fmt.Println(e.Error())
+				panic("insert into cadastre")
+			}
+		} else {
+			e = Insert(rows)
+			if e != nil {
+				fmt.Println(e.Error())
+				panic("insert into cadastre")
+			}
+		}
 
 	}
 	c.HTML(200, "upload.html", nil)
