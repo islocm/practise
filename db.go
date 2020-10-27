@@ -37,12 +37,17 @@ func prepareQueries() {
 		fmt.Println(e.Error())
 		return
 	}
-	Queries["select#code"], e = db.Prepare(cfg.Selectcode)
+	Queries["select#code"], e = db.Prepare(cfg.Selectcadastrecode)
 	if e != nil {
 		fmt.Println(e.Error())
 		return
 	}
 	Queries["update#cadastre"], e = db.Prepare(cfg.Updatecadastre)
+	if e != nil {
+		fmt.Println(e.Error())
+		return
+	}
+	Queries["select#cadastreall"], e = db.Prepare(cfg.Selectcadastreall)
 	if e != nil {
 		fmt.Println(e.Error())
 		return
@@ -77,7 +82,7 @@ type cadastre struct {
 	Npk       string
 	Spp       string
 	Spk       string
-	gis       []cadastre
+	Gis       []cadastre
 }
 
 //Insert insert to database
@@ -137,4 +142,29 @@ func Update(i []string) error {
 
 	return nil
 
+}
+
+func (c *cadastre) SelectAll(qwe string) error {
+	qwe = "%" + qwe + "%"
+	Row, err := Queries["select#cadastreall"].Query(qwe)
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	for Row.Next() {
+
+		e := Row.Scan(&c.Property, &c.Code, &c.District, &c.Ownership, &c.Passport, &c.Document, &c.Regbook, &c.Regpage, &c.Govnum, &c.Govdate, &c.Amount, &c.Rooms, &c.Costa, &c.Costr, &c.Totala, &c.Livinga, &c.Usefula, &c.Pzuo, &c.Pzuz, &c.Pzuzaxvat, &c.Pzupd, &c.Pzupp, &c.Npp, &c.Npk, &c.Spp, &c.Spk)
+
+		if e != nil {
+			fmt.Println(e.Error())
+			return e
+		}
+
+		c.Gis = append(c.Gis, cadastre{Property: c.Property, Code: c.Code, District: c.District, Ownership: c.Ownership, Passport: c.Passport, Document: c.Document, Regbook: c.Regbook, Regpage: c.Regpage, Govnum: c.Govnum, Govdate: c.Govdate, Amount: c.Amount, Rooms: c.Rooms, Costa: c.Costa, Costr: c.Costr, Totala: c.Totala, Livinga: c.Livinga, Usefula: c.Usefula, Pzuo: c.Pzuo, Pzuz: c.Pzuz, Pzuzaxvat: c.Pzuzaxvat, Pzupd: c.Pzupd, Pzupp: c.Pzupp, Npp: c.Npp, Npk: c.Npk, Spp: c.Spp, Spk: c.Spk})
+
+	}
+
+	return nil
 }

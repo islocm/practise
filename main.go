@@ -25,9 +25,8 @@ func main() {
 
 	router.GET("/searching", searching)
 
-	router.GET("/upload", uploadsearching)
-
-	router.POST("/upload", uploadsearching1)
+	router.GET("/upload", uploadsearchingget)
+	router.POST("/upload", uploadsearchingpost)
 
 	router.Run(cfg.ServerHost + ":" + cfg.ServerPort)
 }

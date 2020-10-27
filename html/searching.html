@@ -5,48 +5,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Searching</title>
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/searching.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <header>
-        <table id="myBtn">
-            <tr>
-                <th>Недвижимость</th>
-                <th>Код</th>
-                <th>Махалля</th>
-                <th>Правообладатель</th>
-                <th>Паспорт</th>
-                <th>Сопроводительный документ</th>
-                <th class="hide">Рег. книга</th>
-                <th class="hide">Рег. книга стр.</th>
-                <th class="hide">Гос. номер</th>
-                <th class="hide">Дата гос. номера</th>
-                <th class="hide">Кол-во</th>
-                <th>Комнаты</th>
-                <th class="hide">Стоимость Фактическая</th>
-                <th class="hide">Стоимость Восстановительная</th>
-                <th class="sizing">Площадь Общая</th>
-                <th class="sizing">Площадь Жилая</th>
-                <th class="sizing">Площадь Полезная</th>
-                <th class="hide">Площадь земельного участка Общая</th>
-                <th class="hide">Площадь земельного участка Законная</th>
-                <th class="hide">Площадь земельного участка Захват</th>
-                <th class="hide">Площадь земельного участка Под двором</th>
-                <th class="hide">Площадь земельного участка Под постройкой</th>
-                <th class="hide">Нежилое помещение Площадь</th>
-                <th class="hide">Нежилое помещение Комнаты</th>
-                <th class="hide">Самовольная постройка Площадь</th>
-                <th class="hide">Самовольная постройка Комнаты</th>
+        <div>
+            <a href="/">Home</a>
+        </div>
+        <div>
+            <a href="#">Search</a>
+        </div>
+        <div>
+            <a href="#">Selyami</a>
+        </div>
+        <div>
+            <a href="#">Destroyed</a>
+        </div>
+        <div>
+            <a href="#">qwe</a>
+        </div>
+        <div>
+            <a href="#">asd</a>
+        </div>
 
 
-            </tr>
-        </table>
-        <button onclick="opentable()">open</button>
+        <form action="" method="GET">
+            <input type="search" name="search" id="search" placeholder="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+
     </header>
 
     <main>
 
+        <input type="text" onkeyup="searchp()" id="searchp" placeholder="Недвижимость">
+        <input type="text" onkeyup="searchc()" id="searchc" placeholder="Код">
+        <input type="text" onkeyup="searchm()" id="searchm" placeholder="Махалля">
+        <input type="text" onkeyup="searcho()" id="searcho" placeholder="Правообладатель">
+        <table id="mytable">
+            <tr id="fixing">
+
+                <th class="bigsdata">Недвижимость</th>
+                <th class="bigsdata">Код</th>
+                <th class="bigsdata">Махалля</th>
+                <th class="bigsdata">Правообладатель</th>
+                <th class="passport">Паспорт</th>
+                <th class="bigsdata">Сопроводительный документ</th>
+                <th class="littledata">Рег. книга</th>
+                <th class="littledata">Рег. книга стр.</th>
+                <th class="littledata">Гос. номер</th>
+                <th class="littledata">Дата гос. номера</th>
+                <th class="littledata">Кол-во</th>
+                <th class="littledata">Комнаты</th>
+                <th class="bigsdata">Стоимость Фактическая</th>
+                <th class="bigsdata">Стоимость Восстановительная</th>
+                <th class="littledata">Площадь Общая</th>
+                <th class="littledata">Площадь Жилая</th>
+                <th class="littledata">Площадь Полезная</th>
+                <th class="littledata" title="Площадь земельного участка Общая">Площадь земельного участка Общая</th>
+                <th class="littledata">Площадь земельного участка Законная</th>
+                <th class="littledata">Площадь земельного участка Захват</th>
+                <th class="littledata">Площадь земельного участка Под двором</th>
+                <th class="littledata">Площадь земельного участка Под постройкой</th>
+                <th class="littledata">Нежилое помещение Площадь</th>
+                <th class="littledata">Нежилое помещение Комнаты</th>
+                <th class="littledata">Самовольная постройка Площадь</th>
+                <th class="littledata">Самовольная постройка Комнаты</th>
+
+            </tr>
+            {{range .Selected}}
+            <tr id="fromtop">
+                <td class="bigsdata">{{.Property}}</td>
+                <td class="bigsdata">{{.Code}}</td>
+                <td class="bigsdata">{{.District}}</td>
+                <td class="bigsdata">{{.Ownership}}</td>
+                <td class="passport">{{.Passport}}</td>
+                <td class="bigsdata">{{.Document}}</td>
+                <td class="littledata">{{.Regbook}}</td>
+                <td class="littledata">{{.Regpage}}</td>
+                <td class="littledata">{{.Govnum}}</td>
+                <td class="littledata">{{.Govdate}}</td>
+                <td class="littledata">{{.Amount}}</td>
+                <td class="littledata">{{.Rooms}}</td>
+                <td class="bigsdata">{{.Costa}}</td>
+                <td class="bigsdata">{{.Costr}}</td>
+                <td class="littledata">{{.Totala}}</td>
+                <td class="littledata">{{.Livinga}}</td>
+                <td class="littledata">{{.Usefula}}</td>
+                <td class="littledata">{{.Pzuo}}</td>
+                <td class="littledata">{{.Pzuz}}</td>
+                <td class="littledata">{{.Pzuzaxvat}}</td>
+                <td class="littledata">{{.Pzupd}}</td>
+                <td class="littledata">{{.Pzupp}}</td>
+                <td class="littledata">{{.Npp}}</td>
+                <td class="littledata">{{.Npk}}</td>
+                <td class="littledata">{{.Spp}}</td>
+                <td class="littledata">{{.Spk}}</td>
+            </tr>
+            {{end}}
+        </table>
     </main>
 
     <footer>
