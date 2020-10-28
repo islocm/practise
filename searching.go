@@ -14,10 +14,13 @@ func searching(c *gin.Context) {
 
 	search := c.Query("search")
 
-	e := selected.SelectAll(search)
+	if search != "" && len(search) != 1 {
 
-	if e != nil {
-		fmt.Println(e.Error())
+		e := selected.SelectAll(search)
+
+		if e != nil {
+			fmt.Println(e.Error())
+		}
 	}
 
 	c.HTML(200, "searching.html", gin.H{
