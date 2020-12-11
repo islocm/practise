@@ -1,0 +1,217 @@
+main {
+    .qaror {
+        display: block;
+        width: 100%;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        text-align: right;
+        color: rgb(90, 90, 90);
+        &:hover {
+            background-color: #e5e5e5;
+        }
+    }
+    >button {
+        width: 100%;
+    }
+}
+
+.modelling {
+    padding: 0px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: white;
+    overflow: scroll;
+    >input {
+        margin: 0px;
+        width: 30%;
+        background-color: #f1f1f1;
+        border: none;
+        outline: none;
+        display: none;
+        margin: auto;
+    }
+    .fa-times {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+    }
+    >p {
+        margin: 0px;
+        padding: 2px;
+        text-align: center;
+        color: #57ff5f;
+    }
+    >button {
+        margin: 0px;
+        background-color: white;
+        border: none;
+        outline: none;
+        display: none;
+        margin-top: 5px;
+        margin-left: 45%;
+        cursor: pointer;
+        float: left;
+    }
+}
+
+.incorrect {
+    background-color: red;
+}
+
+body {
+    font-size: 16px;
+    >form {
+        position: fixed;
+        bottom: 26px;
+        left: 0;
+        width: 0;
+        background-color: #f2f2f2;
+        overflow-x: hidden;
+        display: block;
+        transition: 0.5s;
+        input {
+            padding: 5px;
+            margin: 5px;
+            &[type='submit'] {
+                padding: 5px 30px;
+                margin-left: 10px;
+                margin-right: 0;
+            }
+            &[type=button] {
+                padding: 7px 23px;
+                background-color: red;
+                opacity: 0.8;
+                color: white;
+                border: none;
+                cursor: pointer;
+                &:hover {
+                    background-color: red;
+                    opacity: 1;
+                }
+            }
+            &[type=text] {
+                margin-left: 10px;
+            }
+        }
+        @media screen and (max-width: 350px) {
+            display: none;
+        }
+    }
+    .fix-table {
+        border-collapse: collapse;
+        tr {
+            display: flex;
+            // max-width: 100%;
+            justify-content: start;
+            div {
+                display: flex;
+                justify-content: space-between;
+                padding: 2px;
+                margin: 2px;
+                i {
+                    padding: 2px;
+                    cursor: pointer;
+                }
+                .fa-check-double {
+                    color: green;
+                }
+                .fa-align-justify {
+                    color: red;
+                }
+                .fa-check {
+                    color: yellow;
+                }
+            }
+            input {
+                margin: 2px;
+                width: 200px;
+                border: none;
+                outline: none;
+                background-color: #f1f1f1;
+            }
+            td {
+                border: none;
+                padding: 2px;
+                margin: 2px;
+                width: 200px;
+            }
+            #stat {
+                width: 58px;
+                padding: 2px;
+                text-align: center;
+                .fa-check-double {
+                    color: green;
+                }
+                .fa-align-justify {
+                    color: red;
+                }
+                .fa-check {
+                    color: yellow;
+                }
+            }
+            button {
+                border: none;
+                padding: 0px;
+                height: 38px;
+                margin: 2px;
+                padding: 0px 2px;
+                outline: none;
+                background-color: white;
+                &:hover {
+                    background-color: #f1f1f1;
+                    cursor: pointer;
+                }
+            }
+            #coding {
+                cursor: pointer;
+                &:hover {
+                    color: black;
+                    font-size: 16.2px;
+                    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+                    transition: 0.1s;
+                }
+                &:active {
+                    color: #f1f1f1;
+                }
+            }
+            #coding1 {
+                cursor: pointer;
+                &:hover {
+                    color: #757575;
+                }
+                &:active {
+                    color: #f1f1f1;
+                }
+            }
+        }
+    }
+    #mahalla {
+        position: fixed;
+        top: 76px;
+        bottom: 0px;
+        right: 70%;
+        left: 0;
+        background-color: #f1f1f1;
+        display: block;
+        overflow: scroll;
+        .district {
+            width: 100%;
+            border: none;
+            margin: 0;
+            outline: none;
+            display: block;
+            cursor: pointer;
+            &:hover {
+                background-color: #686868;
+                color: #e5e5e5;
+                transition: 0.3s;
+                text-shadow: 2px 2px 2px black;
+            }
+        }
+    }
+}

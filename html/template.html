@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {{define "header-css"}}
+    <link rel="stylesheet" href="/assets/font/css/all.css">
+    <link rel="stylesheet" href="/assets/css/template.css"> {{end}}
+</head>
+
+<body>
+    {{define "header"}}
+    <header>
+        <div id="container-main">
+            <div>
+                <i class="fas fa-bars" id="bar" onclick="templateopenbars()"></i>
+
+
+            </div>
+
+            <div>
+                <a href="/"><i class="fas fa-home main"></i></a>
+                <a href="/information"><i class="fas fa-info-circle main"></i></a>
+                <a href="/searching"><i class="fas fa-search main"></i></a>
+            </div>
+            <div>
+                <i class="fas fa-envelope-square end" onclick="templatetosms()"></i>
+                <i class="far fa-user-circle end" onclick="templateopenlog()"></i>
+            </div>
+
+
+        </div>
+        <div id="container-action">
+            <i class="fas fa-arrow-circle-left" onclick="templatepreviousbutton()"></i>
+            <i class="fas fa-arrow-circle-right" onclick="templatenextbutton()"></i>
+        </div>
+        <div id="container-bar">
+            <i class="fas fa-times" onclick="templatehidewindow()"></i>
+            <a href="/template">Template</a>
+        </div>
+        <div id="login-active">
+            <i class="fas fa-times" onclick="templatecloselog()"></i>
+            <i>{{.}}</i>
+            <i class="fas fa-cog"> Settings</i>
+            <i class="fas fa-user-alt-slash" onclick="templateremovecookie()"> Exit</i>
+        </div>
+    </header>
+    {{end}} {{define "footer"}}
+    <footer id="container-footer">
+        <i id="downrightdrop" class="fas fa-ellipsis-v" onclick="downrightdrop()"></i>
+        <div id="menu-content">
+
+            <i id="fadd" class="fas fa-plus icon"></i>
+            <i id="fupdate" class="far fa-edit icon"></i>
+            <i id="fdelete" class="far fa-trash-alt icon"></i>
+
+
+            <i id="downrightclose" class="fas fa-ellipsis-v icon" onclick="downrightclose()"></i>
+
+        </div>
+    </footer>
+    {{end}} {{define "header-js"}}
+    <script src="/assets/js/template.js"></script>
+    {{end}}
+</body>
+
+</html>

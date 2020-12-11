@@ -5,13 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" href="/assets/icons/cloud-storage.png">
+    <link rel="stylesheet" href="/assets/css/upload.css"> {{template "header-css"}} {{with .Error}}
+    <style>
+        body {
+            background-image: none;
+        }
+    </style>
+    {{end}}
 </head>
 
 <body>
-    <form action="" enctype="multipart/form-data" method="POST">
+    {{template "header".Name}}
+
+    <!-- <form action="" enctype="multipart/form-data" method="POST">
         <input type="file" name="upload">
         <input type="submit" value="Upload">
-    </form>
+    </form> -->
+    <main>
+        <button class="upload" onclick="cadastre()">Cadastre</button>
+        <button class="upload" onclick="information()">Information</button>
+        <pre id="error">{{.Error}}</pre>
+
+    </main>
+
+    <!-- <button id="upload" onclick="cadastre()">Cadastre</button> -->
+    <!-- <button id="upload" onclick="cadastre()">Cadastre</button> -->
+    {{template "header-js"}}
+    <script src="/assets/js/upload.js"></script>
 </body>
 
 </html>

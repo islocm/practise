@@ -1,0 +1,131 @@
+header {
+    color: rgba(0, 0, 0, .54);
+    font-family: Arial, Helvetica, sans-serif;
+    #bar {
+        cursor: pointer;
+        padding: 10px;
+        &:hover {
+            color: black;
+        }
+    }
+    .main {
+        padding: 10px;
+        color: rgba(0, 0, 0, .54);
+        &:hover {
+            color: black;
+        }
+    }
+    .end {
+        padding: 10px;
+        cursor: pointer;
+        &:hover {
+            color: black;
+        }
+    }
+    #container-main {
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: space-between;
+    }
+    #container-action {
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        .fas {
+            padding: 10px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, .54);
+            font-size: 20px;
+            transition: 0.5s;
+            &:hover {
+                color: #0f0e0e;
+                font-size: 36px;
+            }
+        }
+    }
+    #container-bar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        transition: 0.5s;
+        overflow-x: hidden;
+        z-index: 1;
+        background-color: #e5e2e2f5;
+        padding-top: 60px;
+        .fa-times {
+            position: absolute;
+            padding: 5px;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+    }
+    #login-active {
+        text-align: center;
+        position: fixed;
+        right: 0;
+        top: 36px;
+        width: 0px;
+        background-color: #e5e2e2f5;
+        transition: 0.5s;
+        overflow: hidden;
+        @media screen and (max-width: 300px) {
+            top: 72px;
+            // width: 65px;
+            right: 0;
+        }
+        .fa-cog {
+            &:hover {
+                color: #230ec7;
+            }
+        }
+        .fa-user-alt-slash {
+            cursor: pointer;
+            &:hover {
+                color: rgb(45, 228, 17);
+            }
+        }
+        .fa-times {
+            position: absolute;
+            padding: 0px;
+            bottom: 0px;
+            right: 0px;
+            color: rgba(255, 0, 0, 0.496);
+            cursor: pointer;
+            &:hover {
+                color: #ee1414;
+            }
+        }
+    }
+}
+
+footer {
+    #downrightdrop {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        padding: 5px;
+        cursor: pointer;
+    }
+    #menu-content {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 0px;
+        display: flex;
+        transition: 0.09s;
+        justify-content: space-between;
+        background-color: #f3f3f386;
+        .icon {
+            padding: 5px;
+            cursor: pointer;
+        }
+    }
+}
+
+body {
+    margin: 0;
+}

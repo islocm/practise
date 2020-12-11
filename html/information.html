@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="icon" href="/assets/icons/information.png">
+    <link rel="stylesheet" href="/assets/css/information.css"> {{template "header-css"}}
+</head>
+
+<body>
+    {{template "header" .Name}}
+    <main>
+        {{range .Qaror}}
+        <button class="qaror" onclick="windowmahalla({{.Qaror}})" ondblclick="windowqaror({{.Qaror}}, `%%%`)">{{.Qaror}}</button> {{end}}
+
+    </main>
+    <form action="/information" method="GET" id="add">
+        <input type="text" name="addqaror" minlength="7">
+        <input type="submit" value="Add">
+        <input onclick="faddclose()" type="button" value="Close">
+    </form>
+    {{template "footer"}}
+    <script>
+        function windowmahalla(qaror) {
+            let creating = document.createElement("div");
+            creating.id = "mahalla";
+
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "informationpart");
+            let data = JSON.stringify({
+                Decision: qaror,
+            })
+            xhr.send(data);
+            xhr.onload = function(event) {
+                try {
+                    let del = document.getElementById("mahalla");
+                    del.remove();
+                } catch (error) {
+                    console.log(error)
+                } finally {
+                    let data = JSON.parse(event.target.response)
+
+                    if (data.Area == null) {
+                        return
+                    }
+
+
+
+                    for (let i = 0; i < data.Area.length; i++) {
+                        let disbutton = document.createElement("button")
+
+                        disbutton.classList.add("district")
+
+                        disbutton.textContent = data.Area[i];
+
+                        disbutton.onclick = districtfunc.bind(disbutton, qaror, data.Area[i])
+
+                        creating.append(disbutton);
+                    }
+                }
+
+                function districtfunc(qaror, dis) {
+
+
+                    let creating = document.createElement("div");
+                    creating.classList.add("modelling");
+                    document.onkeydown = function(e) {
+                        if (e.key == "Escape") {
+                            creating.remove();
+                        }
+
+                    }
+                    let home = document.createElement("p");
+                    home.textContent = dis;
+
+
+                    let cre = document.createElement("input");
+                    cre.className = "modalinput";
+
+                    let button = document.createElement("button")
+                    button.classList.add("modalbutton");
+                    button.textContent = "Поиск";
+                    button.onclick = anyquery.bind(button, cre, qaror, creating, dis);
+
+                    let times = document.createElement("i");
+                    times.classList.add("fas", "fa-times");
+                    times.onclick = function() {
+                        this.parentElement.remove();
+                    }
+                    creating.append(home, cre, times, button);
+                    document.body.append(creating);
+
+                    anyquery(cre, qaror, creating, dis);
+
+                }
+
+                function anyquery(input, qaror, creating, tuman) {
+
+
+                    xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/information");
+                    let data = JSON.stringify({
+                        Input: input.value,
+                        Qaror: qaror,
+                        Mahalla: tuman,
+                    })
+                    xhr.send(data);
+                    xhr.onload = function(event) {
+                        let data = JSON.parse(event.target.response);
+
+                        if (data.All == null) {
+                            return
+                        }
+
+                        try {
+                            let err = document.getElementById("my-table");
+                            err.remove();
+
+                        } catch (error) {
+                            console.log(error);
+                        } finally {
+                            let table = document.createElement("table");
+
+                            table.id = "my-table";
+                            table.classList.add("fix-table");
+                            let tr = document.createElement("tr");
+                            creating.append(table);
+                            table.appendChild(tr)
+                            let td = document.createElement("div");
+
+                            td.id = "filtr";
+                            let option = document.createElement("i");
+                            option.title = "Завершено";
+                            option.classList.add("fas", "fa-check-double");
+                            let option1 = document.createElement("i");
+                            option1.title = "Недостаток";
+                            option1.classList.add("fas", "fa-check");
+                            let option0 = document.createElement("i");
+                            option0.title = "Ничего";
+                            option0.classList.add("fas", "fa-align-justify");
+                            td.append(option0, option1, option);
+
+                            let input = document.createElement("input");
+                            input.id = "ids1";
+                            input.onkeyup = function() {
+                                let itable = document.getElementById("my-table");
+                                let itr = itable.getElementsByTagName("tr");
+                                let iinput = input.value.toUpperCase();
+                                for (let i = 1; i < itr.length; i++) {
+                                    let itd = itr[i].getElementsByTagName("td")[1];
+                                    let txtValue = itd.textContent || itd.innerText;
+                                    if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                        itr[i].style.display = "";
+                                    } else {
+                                        itr[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+                            let input1 = document.createElement("input");
+                            input1.id = "ids2";
+                            input1.onkeyup = function() {
+                                let itable = document.getElementById("my-table");
+                                let itr = itable.getElementsByTagName("tr");
+                                let iinput = input1.value.toUpperCase();
+                                for (let i = 1; i < itr.length; i++) {
+                                    let itd = itr[i].getElementsByTagName("td")[2];
+                                    let txtValue = itd.textContent || itd.innerText;
+                                    if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                        itr[i].style.display = "";
+                                    } else {
+                                        itr[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+                            let input2 = document.createElement("input");
+                            input2.id = "ids3";
+                            input2.onkeyup = function() {
+                                let itable = document.getElementById("my-table");
+                                let itr = itable.getElementsByTagName("tr");
+                                let iinput = input2.value.toUpperCase();
+                                for (let i = 1; i < itr.length; i++) {
+                                    let itd = itr[i].getElementsByTagName("td")[3];
+                                    let txtValue = itd.textContent || itd.innerText;
+                                    if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                        itr[i].style.display = "";
+                                    } else {
+                                        itr[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+
+                            option.onclick = function() {
+                                // let filtr = document.getElementById("filtr");
+
+                                let table = document.getElementById("my-table");
+                                let tr = table.getElementsByTagName("tr");
+                                for (let i = 1; i < tr.length; i++) {
+                                    let td = tr[i].getElementsByTagName("td")[0];
+                                    if (td.title == "true") {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+                            option1.onclick = function() {
+
+                                let table = document.getElementById("my-table");
+                                let tr = table.getElementsByTagName("tr");
+                                for (let i = 1; i < tr.length; i++) {
+                                    let td = tr[i].getElementsByTagName("td")[0];
+                                    if (td.title == "false") {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+
+                                }
+                            }
+
+                            option0.onclick = function() {
+                                let table = document.getElementById("my-table");
+                                let tr = table.getElementsByTagName("tr");
+                                for (let i = 1; i < tr.length; i++) {
+                                    let td = tr[i].getElementsByTagName("td")[0];
+                                    if (td.title == "") {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+
+
+                            tr.append(td, input, input1, input2)
+                            let thvars = ["№", "Указ", "Район", "Махалля", "Код", "Недвижимость", "Правообладатель", "Сопроводительный документ", "Площадь земельного участка Общая", "Площадь Общая", "Площадь Жилая", "Комнаты", "Дата", "Пользователь"]
+                                // for (let index = 0; index < thvars.length; index++) {
+                                //     let td = document.createElement("td");
+                                //     td.textContent = thvars[index];
+                                //     th.appendChild(td);
+
+                            // }
+                            for (let index = 0; index < data.All.length; index++) {
+                                let tr = document.createElement("tr");
+                                tr.onclick = function() {
+                                    tr.style.color = "#009DFF";
+                                }
+                                table.appendChild(tr);
+
+                                let td = document.createElement("td");
+                                td.id = "coding"
+                                td.textContent = data.All[index].Kod;
+                                td.title = "Код";
+                                td.onclick = function() {
+                                    let link = window.open("s/" + data.All[index].Kod);
+
+
+                                }
+                                td.onmousemove = function(e) {
+                                    if (e.ctrlKey == true) {
+                                        document.getElementById("ids1").focus();
+                                    }
+                                }
+                                td.oncontextmenu = function() {
+                                    let link = window.open("ch/" + data.All[index].Kod);
+                                }
+
+
+                                let td1 = document.createElement("td");
+                                td1.textContent = data.All[index].Nedvijimost;
+                                td1.title = "Недвижимость";
+                                td1.id = "coding"
+                                td1.onclick = function() {
+                                    let link = window.open("s/" + data.All[index].Kod);
+
+                                }
+                                td1.onmousemove = function(e) {
+                                    if (e.ctrlKey == true) {
+                                        document.getElementById("ids2").focus();
+                                    }
+                                }
+                                td1.oncontextmenu = function() {
+                                    let link = window.open("ch/" + data.All[index].Kod);
+                                }
+
+                                let td2 = document.createElement("td");
+                                td2.textContent = data.All[index].Pravoobladatel;
+                                td2.title = "Правообладатель";
+                                td2.id = "coding"
+                                td2.onclick = function() {
+                                    let link = window.open("s/" + data.All[index].Kod);
+
+                                }
+                                td2.onmousemove = function(e) {
+                                    if (e.ctrlKey == true) {
+                                        document.getElementById("ids3").focus();
+                                    }
+                                }
+                                td2.oncontextmenu = function() {
+                                    let link = window.open("ch/" + data.All[index].Kod);
+                                }
+
+                                let td12 = document.createElement("td");
+                                let status = document.createElement("i");
+                                td12.id = "stat";
+                                td12.appendChild(status)
+                                if (data.All[index].Complete == "true") {
+                                    status.classList.add("fas", "fa-check-double");
+                                    td12.title = data.All[index].Complete;
+                                } else if (data.All[index].Complete == "false") {
+                                    status.classList.add("fas", "fa-check");
+                                    td12.title = data.All[index].Complete;
+                                } else {
+                                    status.classList.add("fas", "fa-align-justify");
+                                    td12.title = data.All[index].Complete;
+                                }
+
+
+
+
+                                let but = document.createElement("button");
+                                but.textContent = "Далее"
+                                but.onclick = function() {
+                                    let td3 = document.createElement("td");
+                                    td3.textContent = data.All[index].Tuman;
+                                    td3.title = "Район";
+
+                                    let td4 = document.createElement("td");
+                                    td4.textContent = data.All[index].Mahalla;
+                                    td4.title = "Махалля";
+
+                                    let td5 = document.createElement("td");
+                                    td5.textContent = data.All[index].Soprovoditelniy;
+                                    td5.title = "Сопроводительный документ";
+
+                                    let td6 = document.createElement("td");
+                                    td6.textContent = data.All[index].Pzuo;
+                                    td6.title = "Площадь земельного участка Общая";
+
+                                    let td7 = document.createElement("td");
+                                    td7.textContent = data.All[index].Po;
+                                    td7.title = "Площадь Общая";
+
+                                    let td8 = document.createElement("td");
+                                    td8.textContent = data.All[index].Pj;
+                                    td8.title = "Площадь Жилая";
+
+                                    let td9 = document.createElement("td");
+                                    td9.textContent = data.All[index].Xona;
+                                    td9.title = "Комнаты";
+
+                                    let td10 = document.createElement("td");
+                                    td10.textContent = data.All[index].Datei;
+                                    td10.title = "Дата";
+
+                                    let td11 = document.createElement("td");
+                                    td11.textContent = data.All[index].Useri;
+                                    td11.title = "Пользователь";
+
+                                    let t12 = document.createElement("td");
+                                    t12.textContent = data.All[index].Liver;
+                                    t12.title = "Прописано человек";
+
+                                    let trange = document.createElement("td");
+                                    trange.textContent = data.All[index].Degree;
+                                    trange.title = "Стадия сноса"
+
+                                    tr.append(td3, td4, td5, td6, td7, td8, td9, td10, td11, t12, trange)
+                                    this.remove();
+
+                                }
+
+
+                                tr.append(td12, td, td1, td2, but);
+
+
+
+
+
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+                document.body.append(creating)
+
+            }
+        }
+
+        function windowqaror(qaror, tuman) {
+
+
+            let creating = document.createElement("div");
+            creating.classList.add("modelling");
+            document.onkeydown = function(e) {
+                if (e.key == "Escape") {
+                    creating.remove();
+                }
+
+            }
+            let cre = document.createElement("input");
+            cre.className = "modalinput";
+
+            let home = document.createElement("p");
+            home.textContent = qaror;
+
+            let button = document.createElement("button")
+            button.classList.add("modalbutton");
+            button.textContent = "Поиск";
+            button.onclick = anyquery.bind(button, cre, qaror, creating, tuman);
+
+            let times = document.createElement("i");
+            times.classList.add("fas", "fa-times");
+            times.onclick = function() {
+                this.parentElement.remove();
+            }
+            creating.append(home, cre, times, button);
+            document.body.append(creating);
+
+            anyquery(cre, qaror, creating, tuman);
+
+        }
+
+        function anyquery(input, qaror, creating, tuman) {
+
+
+            xhr = new XMLHttpRequest();
+            xhr.open("POST", "/information");
+            let data = JSON.stringify({
+                Input: input.value,
+                Qaror: qaror,
+                Mahalla: tuman,
+            })
+            xhr.send(data);
+            xhr.onload = function(event) {
+                let data = JSON.parse(event.target.response);
+
+                if (data.All == null) {
+                    return
+                }
+
+                try {
+                    let del = document.getElementById("mahalla");
+                    del.remove();
+                    let err = document.getElementById("my-table");
+                    err.remove();
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    let table = document.createElement("table");
+
+                    table.id = "my-table";
+                    table.classList.add("fix-table");
+                    let tr = document.createElement("tr");
+                    creating.append(table);
+                    table.appendChild(tr)
+                    let td = document.createElement("div");
+
+                    td.id = "filtr";
+                    let option = document.createElement("i");
+                    option.title = "Завершено";
+                    option.classList.add("fas", "fa-check-double");
+                    let option1 = document.createElement("i");
+                    option1.title = "Недостаток";
+                    option1.classList.add("fas", "fa-check");
+                    let option0 = document.createElement("i");
+                    option0.title = "Ничего";
+                    option0.classList.add("fas", "fa-align-justify");
+                    td.append(option0, option1, option);
+
+                    let input = document.createElement("input");
+                    input.id = "ids1";
+                    input.onkeyup = function() {
+                        let itable = document.getElementById("my-table");
+                        let itr = itable.getElementsByTagName("tr");
+                        let iinput = input.value.toUpperCase();
+                        for (let i = 1; i < itr.length; i++) {
+                            let itd = itr[i].getElementsByTagName("td")[1];
+                            let txtValue = itd.textContent || itd.innerText;
+                            if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                itr[i].style.display = "";
+                            } else {
+                                itr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+                    let input1 = document.createElement("input");
+                    input1.id = "ids2";
+                    input1.onkeyup = function() {
+                        let itable = document.getElementById("my-table");
+                        let itr = itable.getElementsByTagName("tr");
+                        let iinput = input1.value.toUpperCase();
+                        for (let i = 1; i < itr.length; i++) {
+                            let itd = itr[i].getElementsByTagName("td")[2];
+                            let txtValue = itd.textContent || itd.innerText;
+                            if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                itr[i].style.display = "";
+                            } else {
+                                itr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+                    let input2 = document.createElement("input");
+                    input2.id = "ids3";
+                    input2.onkeyup = function() {
+                        let itable = document.getElementById("my-table");
+                        let itr = itable.getElementsByTagName("tr");
+                        let iinput = input2.value.toUpperCase();
+                        for (let i = 1; i < itr.length; i++) {
+                            let itd = itr[i].getElementsByTagName("td")[3];
+                            let txtValue = itd.textContent || itd.innerText;
+                            if (txtValue.toUpperCase().indexOf(iinput) > -1) {
+                                itr[i].style.display = "";
+                            } else {
+                                itr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+
+                    option.onclick = function() {
+                        // let filtr = document.getElementById("filtr");
+
+                        let table = document.getElementById("my-table");
+                        let tr = table.getElementsByTagName("tr");
+                        for (let i = 1; i < tr.length; i++) {
+                            let td = tr[i].getElementsByTagName("td")[0];
+                            if (td.title == "true") {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+                    option1.onclick = function() {
+
+                        let table = document.getElementById("my-table");
+                        let tr = table.getElementsByTagName("tr");
+                        for (let i = 1; i < tr.length; i++) {
+                            let td = tr[i].getElementsByTagName("td")[0];
+                            if (td.title == "false") {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+
+                        }
+                    }
+
+                    option0.onclick = function() {
+                        let table = document.getElementById("my-table");
+                        let tr = table.getElementsByTagName("tr");
+                        for (let i = 1; i < tr.length; i++) {
+                            let td = tr[i].getElementsByTagName("td")[0];
+                            if (td.title == "") {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+
+
+
+                    tr.append(td, input, input1, input2)
+                    let thvars = ["№", "Указ", "Район", "Махалля", "Код", "Недвижимость", "Правообладатель", "Сопроводительный документ", "Площадь земельного участка Общая", "Площадь Общая", "Площадь Жилая", "Комнаты", "Дата", "Пользователь"]
+                        // for (let index = 0; index < thvars.length; index++) {
+                        //     let td = document.createElement("td");
+                        //     td.textContent = thvars[index];
+                        //     th.appendChild(td);
+
+                    // }
+                    for (let index = 0; index < data.All.length; index++) {
+                        let tr = document.createElement("tr");
+                        tr.onclick = function() {
+                            tr.style.color = "#009DFF";
+                        }
+                        table.appendChild(tr);
+
+                        let td = document.createElement("td");
+                        td.textContent = data.All[index].Kod;
+                        td.id = "coding1"
+                        td.title = "Код";
+                        td.onclick = function() {
+                            let link = window.open("s/" + data.All[index].Kod);
+
+                        }
+                        td.onmousemove = function(e) {
+                            if (e.ctrlKey == true) {
+                                document.getElementById("ids1").focus();
+                            }
+                        }
+                        td.oncontextmenu = function() {
+                            let link = window.open("ch/" + data.All[index].Kod);
+                        }
+
+
+                        let td1 = document.createElement("td");
+                        td1.textContent = data.All[index].Nedvijimost;
+                        td1.title = "Недвижимость";
+                        td1.id = "coding1"
+                        td1.onclick = function() {
+                            let link = window.open("s/" + data.All[index].Kod);
+
+                        }
+                        td1.onmousemove = function(e) {
+                            if (e.ctrlKey == true) {
+                                document.getElementById("ids2").focus();
+                            }
+                        }
+                        td1.oncontextmenu = function() {
+                            let link = window.open("ch/" + data.All[index].Kod);
+                        }
+
+                        let td2 = document.createElement("td");
+                        td2.textContent = data.All[index].Pravoobladatel;
+                        td2.title = "Правообладатель";
+                        td2.id = "coding1"
+                        td2.onclick = function() {
+                            let link = window.open("s/" + data.All[index].Kod);
+
+                        }
+                        td2.onmousemove = function(e) {
+                            if (e.ctrlKey == true) {
+                                document.getElementById("ids3").focus();
+                            }
+                        }
+                        td2.oncontextmenu = function() {
+                            let link = window.open("ch/" + data.All[index].Kod);
+                        }
+
+                        let td12 = document.createElement("td");
+                        let status = document.createElement("i");
+                        td12.id = "stat";
+                        td12.appendChild(status)
+                        if (data.All[index].Complete == "true") {
+                            status.classList.add("fas", "fa-check-double");
+                            td12.title = data.All[index].Complete;
+                        } else if (data.All[index].Complete == "false") {
+                            status.classList.add("fas", "fa-check");
+                            td12.title = data.All[index].Complete;
+                        } else {
+                            status.classList.add("fas", "fa-align-justify");
+                            td12.title = data.All[index].Complete;
+                        }
+
+
+
+
+                        let but = document.createElement("button");
+                        but.textContent = "Далее"
+                        but.onclick = function() {
+                            let td3 = document.createElement("td");
+                            td3.textContent = data.All[index].Tuman;
+                            td3.title = "Район";
+
+                            let td4 = document.createElement("td");
+                            td4.textContent = data.All[index].Mahalla;
+                            td4.title = "Махалля";
+
+                            let td5 = document.createElement("td");
+                            td5.textContent = data.All[index].Soprovoditelniy;
+                            td5.title = "Сопроводительный документ";
+
+                            let td6 = document.createElement("td");
+                            td6.textContent = data.All[index].Pzuo;
+                            td6.title = "Площадь земельного участка Общая";
+
+                            let td7 = document.createElement("td");
+                            td7.textContent = data.All[index].Po;
+                            td7.title = "Площадь Общая";
+
+                            let td8 = document.createElement("td");
+                            td8.textContent = data.All[index].Pj;
+                            td8.title = "Площадь Жилая";
+
+                            let td9 = document.createElement("td");
+                            td9.textContent = data.All[index].Xona;
+                            td9.title = "Комнаты";
+
+                            let td10 = document.createElement("td");
+                            td10.textContent = data.All[index].Datei;
+                            td10.title = "Дата";
+
+                            let td11 = document.createElement("td");
+                            td11.textContent = data.All[index].Useri;
+                            td11.title = "Пользователь";
+
+                            let t12 = document.createElement("td");
+                            t12.textContent = data.All[index].Liver;
+                            t12.title = "Прописано человек";
+
+                            let trange = document.createElement("td");
+                            trange.textContent = data.All[index].Degree;
+                            trange.title = "Стадия сноса"
+
+                            tr.append(td3, td4, td5, td6, td7, td8, td9, td10, td11, t12, trange)
+                            this.remove();
+
+                        }
+
+
+                        tr.append(td12, td, td1, td2, but);
+
+
+
+
+
+                    }
+                }
+            }
+        }
+
+        function Clearincorrect() {
+            this.classList.remove("incorrect");
+            this.oninput = undefined;
+        }
+
+        function fadd() {
+            let form = document.getElementById("add");
+            form.style.width = "200px";
+
+        }
+
+        function faddclose() {
+            let form = document.getElementById("add");
+            form.style.width = "0px"
+        }
+        refresh();
+
+        function refresh() {
+            if (window.location.search != "") {
+                window.location.assign("information")
+            }
+        }
+    </script>
+
+    {{template "header-js"}}
+</body>
+
+</html>

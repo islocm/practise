@@ -4,23 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="icon" href="/assets/icons/android-icon-192x192.png" type="image/x-icon"> -->
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/information.css">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/font/css/all.css"> {{template "header-css"}}
+
 </head>
 
 <body>
 
-    <header>
 
-    </header>
+
+    {{if eq .IsLogin true}} {{template "header"}} {{else}}
+    <div id="head-first">
+
+        <a href="/information">information</a>
+        <a href="#" id="head-div-first"><i class="fas fa-home"></i></a>
+        <a href="#"><i class="fas fa-search"></i></a>
+        <i class="fas fa-user-lock" onclick="OpenWindowLogin()"></i>
+    </div>
+    {{end}}
+
+
     <main>
-        <p>salom</p>
+
     </main>
 
     <footer>
         <p>salom</p>
     </footer>
 
+
+    {{template "header-js"}}
+    <script src="/assets/js/main.js"></script>
 
 </body>
 

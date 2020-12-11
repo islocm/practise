@@ -1,0 +1,46 @@
+body {
+    background-image: url(/assets/image/luca-bravo-hFzIoD0F_i8-unsplash.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+main {
+    width: 100%;
+    >button {
+        display: block;
+        width: 100%;
+    }
+    pre {
+        color: red;
+        text-align: center;
+    }
+}
+
+form {
+    text-align: center;
+    display: block;
+    input {
+        background-color: rgba(135, 207, 235, 0.483);
+        width: 25px;
+        border: none;
+        margin: none;
+        text-align: center;
+        &[type="submit"] {
+            cursor: pointer;
+            width: 50px;
+            &:hover {
+                background-color: skyblue;
+            }
+        }
+    }
+    label {
+        background-color: rgba(135, 207, 235, 0.626);
+        color: white;
+        font-family: sans-serif;
+        cursor: pointer;
+        display: block;
+        &:hover {
+            background-color: skyblue;
+        }
+    }
+}
